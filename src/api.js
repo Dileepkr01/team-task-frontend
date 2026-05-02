@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api"
+  baseURL: "https://team-task-backend-production-6748.up.railway.app/"
 });
 
 // Attach token automatically
