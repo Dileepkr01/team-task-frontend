@@ -4,7 +4,6 @@ import Navbar from "../components/Navbar";
 
 export default function Projects() {
   const [name, setName] = useState("");
-  const [members, setMembers] = useState("");
   const [projects, setProjects] = useState([]);
 
   const fetchProjects = async () => {
@@ -18,15 +17,16 @@ export default function Projects() {
 
   const createProject = async () => {
     try {
+      if (!name) {
+        return alert("Enter project name");
+      }
+
+      // ✅ Only send name
       await API.post("/projects", {
-        name,
-        members: members
-          ? members.split(",").map((m) => m.trim())
-          : []
+        name
       });
 
       setName("");
-      setMembers("");
       fetchProjects();
 
     } catch (err) {
@@ -45,13 +45,6 @@ export default function Projects() {
         placeholder="Project name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-      />
-
-      {/* MEMBERS INPUT */}
-      <input
-        placeholder="Enter user IDs (comma separated)"
-        value={members}
-        onChange={(e) => setMembers(e.target.value)}
       />
 
       <button onClick={createProject}>Create</button>
